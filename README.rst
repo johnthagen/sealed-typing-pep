@@ -38,54 +38,58 @@ be defined in the same module as the base class.
 The idea is that since all subclasses are known, the type checker can treat
 the sealed base class as a union of all its subclasses. Together with
 dataclasses this allows a clean and safe support of algebraic data types
-in Python. Consider this example::
+in Python. Consider this example,
 
-  from dataclasses import dataclass
-  from typing import sealed
+.. code-block:: python
 
-  @sealed
-  class Node:
-      ...
+    from dataclasses import dataclass
+    from typing import sealed
 
-  class Expression(Node):
-      ...
+    @sealed
+    class Node:
+        ...
 
-  class Statement(Node):
-      ...
+    class Expression(Node):
+        ...
 
-  @dataclass
-  class Name(Expression):
-      name: str
+    class Statement(Node):
+        ...
 
-  @dataclass
-  class Operation(Expression):
-      left: Expression
-      op: str
-      right: Expression
+    @dataclass
+    class Name(Expression):
+        name: str
 
-  @dataclass
-  class Assignment(Statement):
-      target: str
-      value: Expression
+    @dataclass
+    class Operation(Expression):
+        left: Expression
+        op: str
+        right: Expression
 
-  @dataclass
-  class Print(Statement):
-      value: Expression
+    @dataclass
+    class Assignment(Statement):
+        target: str
+        value: Expression
+
+    @dataclass
+    class Print(Statement):
+        value: Expression
 
 With such definition, a type checker can safely treat ``Node`` as
 ``Union[Name, Operation, Assignment, Print]``, and also safely treat e.g.
 ``Expression`` as ``Union[Name, Operation]``. So this will result in a type
 checking error in the below snippet, because ``Name`` is not handled (and type
-checker can give a useful error message)::
+checker can give a useful error message).
 
-  def dump(node: Node) -> str:
-      match node:
-          case Assignment(target, value):
-              return f"{target} = {dump(value)}"
-          case Print(value):
-              return f"print({dump(value)})"
-          case Operation(left, op, right):
-              return f"({dump(left)} {op} {dump(right)})"
+.. code-block:: python
+
+    def dump(node: Node) -> str:
+        match node:
+            case Assignment(target, value):
+                return f"{target} = {dump(value)}"
+            case Print(value):
+                return f"print({dump(value)})"
+            case Operation(left, op, right):
+                return f"({dump(left)} {op} {dump(right)})"
 
 
 Rationale
@@ -138,29 +142,30 @@ variants of different shapes. But given that the Python ``Enum`` is more or
 less normal classes, with some magic internals, this would be a much more
 invasive change.
 
+.. code-block:: python
 
-  from dataclasses import dataclass
-  from enum import Enum
+    from dataclasses import dataclass
+    from enum import Enum
 
-  class Message(Enum):
-      @dataclass
-      class Quit:
-          ...
+    class Message(Enum):
+        @dataclass
+        class Quit:
+            ...
 
-      @dataclass
-      class Move:
-          x: int
-          y: int
+        @dataclass
+        class Move:
+            x: int
+            y: int
 
-      @dataclass
-      class Write:
-          message: str
+        @dataclass
+        class Write:
+            message: str
 
-      @dataclass
-      class ChangeColor:
-          r: int
-          g: int
-          b: int
+        @dataclass
+        class ChangeColor:
+            r: int
+            g: int
+            b: int
 
 
 Open Issues
