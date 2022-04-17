@@ -1,20 +1,16 @@
 PEP: <REQUIRED: pep number>
-Title: <REQUIRED: pep title>
-Author: <REQUIRED: list of authors' real names and optionally, email addrs>
-Sponsor: <real name of sponsor>
+Title: Adding a sealed qualifier to typing
+Author: John Hagen <johnthagen@gmail.com>
+Sponsor: Jelle Zijlstra
 PEP-Delegate: <PEP delegate's real name>
-Discussions-To: <REQUIRED: URL of current canonical discussion thread>
-Status: <REQUIRED: Draft | Active | Accepted | Provisional | Deferred | Rejected | Withdrawn | Final | Superseded>
-Type: <REQUIRED: Standards Track | Informational | Process>
+Discussions-To: typing-sig@python.org
+Status: Draft
+Type: Standards Track
 Content-Type: text/x-rst
-Requires: <pep numbers>
-Created: <date created on, in dd-mmm-yyyy format>
-Python-Version: <version number>
-Post-History: <REQUIRED: dates, in dd-mmm-yyyy format, and corresponding links to PEP discussion threads>
-Replaces: <pep number>
-Superseded-By: <pep number>
+Created: 17-Apr-2022
+Python-Version: 3.11
+Post-History:
 Resolution: <url>
-
 
 Abstract
 ========
