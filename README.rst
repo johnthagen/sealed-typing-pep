@@ -91,7 +91,10 @@ checker can give a useful error message)::
 Rationale
 =========
 
-[Describe why particular design decisions were made.]
+Kotlin [4]_, Scala 2 [5]_, and Java 17 [6]_ all support a ``sealed`` keyword
+that is used to create algebraic data types. By using the same terminology,
+the ``@sealed`` decorator will be familiar to developers familiar with those
+languages.
 
 
 Specification
@@ -147,6 +150,15 @@ Footnotes
 
 .. [3]
    https://docs.python.org/3/library/typing.html
+
+.. [4]
+   https://kotlinlang.org/docs/sealed-classes.html
+
+.. [5]
+   https://docs.scala-lang.org/tour/pattern-matching.html
+
+.. [6]
+   https://openjdk.java.net/jeps/409
 
 Copyright
 =========
