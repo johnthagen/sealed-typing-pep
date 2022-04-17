@@ -130,7 +130,49 @@ Reference Implementation
 Rejected Ideas
 ==============
 
-[Why certain ideas that were brought while discussing this PEP were not ultimately pursued.]
+Generalize ``Enum``
+-------------------
+
+Rust [7]_, Scala 3 [8]_, and Swift [9]_ support algebraic data types using a
+generalized ``enum`` mechanism.
+
+.. code-block:: rust
+
+    enum Message {
+        Quit,
+        Move { x: i32, y: i32 },
+        Write(String),
+        ChangeColor(i32, i32, i32),
+    }
+
+One could imagine a generalization of the Python ``Enum`` [10]_ to support
+variants of different shapes. But given that the Python ``Enum`` is more or
+less normal classes, with some magic internals, this would be a much more
+invasive change.
+
+
+  from dataclasses import dataclass
+  from enum import Enum
+
+  class Message(Enum):
+      @dataclass
+      class Quit:
+          ...
+
+      @dataclass
+      class Move:
+          x: int
+          y: int
+
+      @dataclass
+      class Write:
+          message: str
+
+      @dataclass
+      class ChangeColor:
+          r: int
+          g: int
+          b: int
 
 
 Open Issues
@@ -166,6 +208,18 @@ Footnotes
 
 .. [6]
    https://openjdk.java.net/jeps/409
+
+.. [7]
+   https://doc.rust-lang.org/book/ch06-01-defining-an-enum.html
+
+.. [8]
+   https://docs.scala-lang.org/scala3/reference/enums/adts.html
+
+.. [9]
+   https://docs.swift.org/swift-book/LanguageGuide/Enumerations.html
+
+.. [10]
+   https://docs.python.org/3/library/enum.html
 
 Copyright
 =========
