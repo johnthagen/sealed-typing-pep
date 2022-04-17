@@ -91,6 +91,8 @@ checker can give a useful error message).
             case Operation(left, op, right):
                 return f"({dump(left)} {op} {dump(right)})"
 
+Note: This section was largely derived from PEP 622 [11]_.
+
 
 Rationale
 =========
@@ -213,6 +215,9 @@ Footnotes
 
 .. [10]
    https://docs.python.org/3/library/enum.html
+
+.. [11]
+   https://peps.python.org/pep-0622/#sealed-classes-as-algebraic-data-types
 
 
 Copyright
