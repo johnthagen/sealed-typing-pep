@@ -103,18 +103,6 @@ Specification
 [Describe the syntax and semantics of any new language feature.]
 
 
-Backwards Compatibility
-=======================
-
-[Describe potential impact and severity on pre-existing code.]
-
-
-Security Implications
-=====================
-
-[How could a malicious user take advantage of this new feature?]
-
-
 How to Teach This
 =================
 
@@ -220,6 +208,7 @@ Footnotes
 
 .. [10]
    https://docs.python.org/3/library/enum.html
+
 
 Copyright
 =========
