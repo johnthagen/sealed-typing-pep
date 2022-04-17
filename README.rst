@@ -136,7 +136,14 @@ Rejected Ideas
 Open Issues
 ===========
 
-[Any points that are still being decided/discussed.]
+Must subclasses by defined in the same module?
+----------------------------------------------
+
+Kotlin, Scala, and Java require subtypes of ``sealed`` classes be defined in
+the same file as the ``sealed`` class. This assures that all subtypes are known
+to the type checker.
+
+Should Python specify the same restriction?
 
 
 Footnotes
