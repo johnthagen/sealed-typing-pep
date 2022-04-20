@@ -8,7 +8,7 @@ Status: Draft
 Type: Standards Track
 Content-Type: text/x-rst
 Created: 17-Apr-2022
-Python-Version: 3.11
+Python-Version: 3.12
 Post-History:
 Resolution: <url>
 
