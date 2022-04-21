@@ -1,6 +1,6 @@
 PEP: <REQUIRED: pep number>
 Title: Adding a sealed qualifier to typing
-Author: John Hagen <johnthagen@gmail.com>
+Author: John Hagen <johnthagen@gmail.com>, David Hagen <david@drhagen.com>
 Sponsor: Jelle Zijlstra
 PEP-Delegate: <PEP delegate's real name>
 Discussions-To: typing-sig@python.org
@@ -78,9 +78,10 @@ in Python. Consider this example,
 
 With such definition, a type checker can safely treat ``Node`` as
 ``Union[Expression, Statement]``, and also safely treat e.g.
-``Expression`` as ``Union[Name, Operation]`` and ``Statement`` as ``Union[Assignment, Print]``. So this will result in a type
-checking error in the below snippet, because ``Name`` is not handled (and type
-checker can give a useful error message).
+``Expression`` as ``Union[Name, Operation]`` and ``Statement`` as
+``Union[Assignment, Print]``. So this will result in a type checking error in
+the below snippet, because ``Name`` is not handled (and type checker can give a
+useful error message).
 
 .. code-block:: python
 
@@ -184,17 +185,17 @@ Java requires that subclasses be explicitly listed with the base class.
     public final class Leaf {}
     public final class Branch {}
 
-The advantage of this requirement is that subclasses can be defined
-anywhere, not just in the same file, eliminating the somewhat weird
-file dependence of this feature. Once disadvantage is that requires that all
-subclasses to be written twice: once when defined and once in the enumerated
-list on the base class.
+The advantage of this requirement is that subclasses can be defined anywhere,
+not just in the same file, eliminating the somewhat weird file dependence of
+this feature. Once disadvantage is that requires that all subclasses to be
+written twice: once when defined and once in the enumerated list on the base
+class.
 
 There is also an inherent circular reference when explicitly enumerating the
 subclasses. The subclass refers to the base class in order to inherit from it,
 and the base class refers to the subclasses in order to enumerate them. In
-statically typed languages, these kinds of circular references in the types
-can be managed, but in Python, it is much harder.
+statically typed languages, these kinds of circular references in the types can
+be managed, but in Python, it is much harder.
 
 For example, this ``Sealed`` base class that behaves like ``Generic``:
 
