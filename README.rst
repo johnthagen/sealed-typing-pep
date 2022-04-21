@@ -1,6 +1,6 @@
 PEP: <REQUIRED: pep number>
 Title: Adding a sealed qualifier to typing
-Author: John Hagen <johnthagen@gmail.com>
+Author: John Hagen <johnthagen@gmail.com>, David Hagen <david@drhagen.com>
 Sponsor: Jelle Zijlstra
 PEP-Delegate: <PEP delegate's real name>
 Discussions-To: typing-sig@python.org
@@ -49,9 +49,11 @@ in Python. Consider this example,
     class Node:
         ...
 
+    @sealed
     class Expression(Node):
         ...
 
+    @sealed
     class Statement(Node):
         ...
 
@@ -75,10 +77,11 @@ in Python. Consider this example,
         value: Expression
 
 With such definition, a type checker can safely treat ``Node`` as
-``Union[Name, Operation, Assignment, Print]``, and also safely treat e.g.
-``Expression`` as ``Union[Name, Operation]``. So this will result in a type
-checking error in the below snippet, because ``Name`` is not handled (and type
-checker can give a useful error message).
+``Union[Expression, Statement]``, and also safely treat e.g.
+``Expression`` as ``Union[Name, Operation]`` and ``Statement`` as
+``Union[Assignment, Print]``. So this will result in a type checking error in
+the below snippet, because ``Name`` is not handled (and type checker can give a
+useful error message).
 
 .. code-block:: python
 
@@ -141,7 +144,7 @@ generalized ``enum`` mechanism.
 
 One could imagine a generalization of the Python ``Enum`` [10]_ to support
 variants of different shapes. But given that the Python ``Enum`` is more or
-less normal classes, with some magic internals, this would be a much more
+less a normal class, with some magic internals, this would be a much more
 invasive change.
 
 .. code-block:: python
@@ -168,6 +171,58 @@ invasive change.
             r: int
             g: int
             b: int
+
+Explicitly list subclasses
+--------------------------
+
+Java requires that subclasses be explicitly listed with the base class.
+
+.. code-block:: java
+
+    public sealed interface Node
+        permits Leaf, Branch {}
+    
+    public final class Leaf {}
+    public final class Branch {}
+
+The advantage of this requirement is that subclasses can be defined anywhere,
+not just in the same file, eliminating the somewhat weird file dependence of
+this feature. Once disadvantage is that requires that all subclasses to be
+written twice: once when defined and once in the enumerated list on the base
+class.
+
+There is also an inherent circular reference when explicitly enumerating the
+subclasses. The subclass refers to the base class in order to inherit from it,
+and the base class refers to the subclasses in order to enumerate them. In
+statically typed languages, these kinds of circular references in the types can
+be managed, but in Python, it is much harder.
+
+For example, this ``Sealed`` base class that behaves like ``Generic``:
+
+.. code-block:: python
+
+    from typing import Sealed
+
+    class Node(Sealed[Leaf, Branch]): ...
+
+    class Leaf(Node): ...
+    class Branch(Node): ...
+
+This cannot work because ``Leaf`` must be defined before ``Node`` and ``Node``
+must be defined before ``Leaf``. This is a not an annotation, so lazy
+annotations cannot save it. Perhaps, the subclasses in the enumerated list could
+be strings, but that severely hurts the ergonomics of this feature.
+
+If the enumerated list was in an annotation, it could be made to work, but there
+is no natural place for the annotation to live. Here is one possibility:
+
+.. code-block:: python
+
+    class Node:
+        __sealed__: Leaf | Branch
+
+    class Leaf(Node): ...
+    class Branch(Node): ...
 
 
 Open Issues
