@@ -224,8 +224,8 @@ is no natural place for the annotation to live. Here is one possibility:
     class Leaf(Node): ...
     class Branch(Node): ...
 
-Just use Union
---------------
+``Union`` of independent variants
+---------------------------------
 
 Some of the behavior of ``sealed`` can be emulated with ``Union`` today.
 
@@ -267,7 +267,7 @@ example, matching only works on the base class, not the union type:
 
 .. code-block:: python
 
-    maybe_node: Node | Node = ...  # must be Node to enforce exhaustiveness
+    maybe_node: Node | None = ...  # must be Node to enforce exhaustiveness
 
     match maybe_node:
         case Node():  # TypeError: called match pattern must be a type
