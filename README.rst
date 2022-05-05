@@ -109,7 +109,26 @@ languages.
 Specification
 =============
 
-[Describe the syntax and semantics of any new language feature.]
+The ``typing.sealed`` decorator can be applied to the definition of any class.
+This decoration indicates to type checkers that all immediate subclasses of the
+decorated class are defined in the current file.
+
+The exhaustiveness checking features of type checkers should assume that there
+are no subclasses outside the current file, treating the decorated class as a
+``Union`` of all its same-file subclasses.
+
+Type checkers should raise an error if a sealed class is inherited in a file
+different from where the sealed class is declared.
+
+A sealed class is automatically declared to be abstract. Whatever actions a
+type checker normally takes with abstract classes should be taken with sealed
+classes as well. What exactly these behaviors are (e.g. disallowing
+instantiation) is outside the scope of this PEP.
+
+Similar to the ``typing.final`` decorator [12_], the only runtime behavior of
+this decorator is to set the ``__sealed__`` attribute of class to ``True`` so
+that the sealed property of the class can be introspected. There is no runtime
+enforcement of sealed class inheritance.
 
 
 How to Teach This
@@ -288,15 +307,6 @@ situation is particularly unfriendly to the user of a sealed class.
 Open Issues
 ===========
 
-Must subclasses by defined in the same module?
-----------------------------------------------
-
-Kotlin, Scala, and Java require subtypes of ``sealed`` classes be defined in
-the same file as the ``sealed`` class. This assures that all subtypes are known
-to the type checker.
-
-Should Python specify the same restriction?
-
 
 Footnotes
 =========
@@ -334,6 +344,8 @@ Footnotes
 .. [11]
    https://peps.python.org/pep-0622/#sealed-classes-as-algebraic-data-types
 
+.. [12]
+   https://peps.python.org/pep-0591/
 
 Copyright
 =========
