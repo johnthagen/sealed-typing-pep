@@ -125,7 +125,7 @@ type checker normally takes with abstract classes should be taken with sealed
 classes as well. What exactly these behaviors are (e.g. disallowing
 instantiation) is outside the scope of this PEP.
 
-Similar to the ``typing.final`` decorator [12_], the only runtime behavior of
+Similar to the ``typing.final`` decorator [12]_, the only runtime behavior of
 this decorator is to set the ``__sealed__`` attribute of class to ``True`` so
 that the sealed property of the class can be introspected. There is no runtime
 enforcement of sealed class inheritance.
