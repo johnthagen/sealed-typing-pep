@@ -131,12 +131,6 @@ that the sealed property of the class can be introspected. There is no runtime
 enforcement of sealed class inheritance.
 
 
-How to Teach This
-=================
-
-[How to teach users, new and experienced, how to apply the PEP to their work.]
-
-
 Reference Implementation
 ========================
 
