@@ -17,7 +17,7 @@ Abstract
 ========
 
 This PEP proposes a ``@sealed`` decorator be added to the ``typing`` module to
-support creating algebraic data types (ADTs) which type checkers can
+support creating versatile algebraic data types (ADTs) which type checkers can
 exhaustively pattern match against.
 
 
