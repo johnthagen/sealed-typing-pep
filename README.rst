@@ -95,13 +95,13 @@ message).
             case Operation(left, op, right):
                 return f"({dump(left)} {op} {dump(right)})"
 
-Note: This section was largely derived from PEP 622 [11]_.
+Note: This section was largely derived from PEP 622 [4]_.
 
 
 Rationale
 =========
 
-Kotlin [4]_, Scala 2 [5]_, and Java 17 [6]_ all support a ``sealed`` keyword
+Kotlin [5]_, Scala 2 [6]_, and Java 17 [7]_ all support a ``sealed`` keyword
 that is used to declare algebraic data types. By using the same terminology,
 the ``@sealed`` decorator will be familiar to developers familiar with those
 languages.
@@ -126,7 +126,7 @@ type checker normally takes with abstract classes should be taken with sealed
 classes as well. What exactly these behaviors are (e.g. disallowing
 instantiation) is outside the scope of this PEP.
 
-Similar to the ``typing.final`` decorator [12]_, the only runtime behavior of
+Similar to the ``typing.final`` decorator [8]_, the only runtime behavior of
 this decorator is to set the ``__sealed__`` attribute of class to ``True`` so
 that the sealed property of the class can be introspected. There is no runtime
 enforcement of sealed class inheritance.
@@ -144,7 +144,7 @@ Rejected Ideas
 Generalize ``Enum``
 -------------------
 
-Rust [7]_, Scala 3 [8]_, and Swift [9]_ support algebraic data types using a
+Rust [9]_, Scala 3 [10]_, and Swift [11]_ support algebraic data types using a
 generalized ``enum`` mechanism.
 
 .. code-block:: rust
@@ -156,7 +156,7 @@ generalized ``enum`` mechanism.
         ChangeColor(i32, i32, i32),
     }
 
-One could imagine a generalization of the Python ``Enum`` [10]_ to support
+One could imagine a generalization of the Python ``Enum`` [12]_ to support
 variants of different shapes. But given that the Python ``Enum`` is more or
 less a normal class, with some magic internals, this would be a much more
 invasive change.
@@ -316,31 +316,32 @@ Footnotes
    https://docs.python.org/3/library/typing.html
 
 .. [4]
-   https://kotlinlang.org/docs/sealed-classes.html
-
-.. [5]
-   https://docs.scala-lang.org/tour/pattern-matching.html
-
-.. [6]
-   https://openjdk.java.net/jeps/409
-
-.. [7]
-   https://doc.rust-lang.org/book/ch06-01-defining-an-enum.html
-
-.. [8]
-   https://docs.scala-lang.org/scala3/reference/enums/adts.html
-
-.. [9]
-   https://docs.swift.org/swift-book/LanguageGuide/Enumerations.html
-
-.. [10]
-   https://docs.python.org/3/library/enum.html
-
-.. [11]
    https://peps.python.org/pep-0622/#sealed-classes-as-algebraic-data-types
 
-.. [12]
+.. [5]
+   https://kotlinlang.org/docs/sealed-classes.html
+
+.. [6]
+   https://docs.scala-lang.org/tour/pattern-matching.html
+
+.. [7]
+   https://openjdk.java.net/jeps/409
+
+.. [8]
    https://peps.python.org/pep-0591/
+
+.. [9]
+   https://doc.rust-lang.org/book/ch06-01-defining-an-enum.html
+
+.. [10]
+   https://docs.scala-lang.org/scala3/reference/enums/adts.html
+
+.. [11]
+   https://docs.swift.org/swift-book/LanguageGuide/Enumerations.html
+
+.. [12]
+   https://docs.python.org/3/library/enum.html
+
 
 
 Copyright
