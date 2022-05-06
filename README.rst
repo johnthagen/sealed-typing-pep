@@ -28,14 +28,15 @@ Quite often it is desirable to apply exhaustiveness to a set of classes without
 defining ad-hoc union types, which is itself fragile if a class is missing in
 the union definition. A design pattern where a group of record-like classes is
 combined into a union is popular in other languages that support pattern
-matching [1]_ and is known under a name of algebraic data types [2]_.
+matching [1]_ and is known as a nominal sum type, a key instatiation of
+algebraic data types [2]_.
 
-We propose to add a special decorator class ``@sealed`` to the ``typing``
+We propose adding a special decorator class ``@sealed`` to the ``typing``
 module [3]_, that will have no effect at runtime, but will indicate to static
-type checkers that all subclasses (direct and indirect) of this class should
-be defined in the same module as the base class.
+type checkers that all direct subclasses of this class should be defined in the
+same module as the base class.
 
-The idea is that since all subclasses are known, the type checker can treat
+The idea is that, since all subclasses are known, the type checker can treat
 the sealed base class as a union of all its subclasses. Together with
 dataclasses this allows a clean and safe support of algebraic data types
 in Python. Consider this example,
@@ -76,12 +77,12 @@ in Python. Consider this example,
     class Print(Statement):
         value: Expression
 
-With such definition, a type checker can safely treat ``Node`` as
-``Union[Expression, Statement]``, and also safely treat e.g.
-``Expression`` as ``Union[Name, Operation]`` and ``Statement`` as
-``Union[Assignment, Print]``. So this will result in a type checking error in
-the below snippet, because ``Name`` is not handled (and type checker can give a
-useful error message).
+With such a definition, a type checker can safely treat ``Node`` as
+``Union[Expression, Statement]``, and also safely treat ``Expression`` as
+``Union[Name, Operation]`` and ``Statement`` as ``Union[Assignment, Print]``.
+With these declarations, a type checking error will occur in the below snippet,
+because ``Name`` is not handled (and the type checker can give a useful error
+message).
 
 .. code-block:: python
 
@@ -101,7 +102,7 @@ Rationale
 =========
 
 Kotlin [4]_, Scala 2 [5]_, and Java 17 [6]_ all support a ``sealed`` keyword
-that is used to create algebraic data types. By using the same terminology,
+that is used to declare algebraic data types. By using the same terminology,
 the ``@sealed`` decorator will be familiar to developers familiar with those
 languages.
 
@@ -109,7 +110,7 @@ languages.
 Specification
 =============
 
-The ``typing.sealed`` decorator can be applied to the definition of any class.
+The ``typing.sealed`` decorator can be applied to the declaration of any class.
 This decoration indicates to type checkers that all immediate subclasses of the
 decorated class are defined in the current file.
 
@@ -340,6 +341,7 @@ Footnotes
 
 .. [12]
    https://peps.python.org/pep-0591/
+
 
 Copyright
 =========
