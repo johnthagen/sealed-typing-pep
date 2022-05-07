@@ -299,10 +299,6 @@ Having to remember whether to use the base class or the union type in each
 situation is particularly unfriendly to the user of a sealed class.
 
 
-Open Issues
-===========
-
-
 Footnotes
 =========
 
