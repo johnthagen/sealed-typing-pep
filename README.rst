@@ -157,9 +157,8 @@ generalized ``enum`` mechanism.
     }
 
 One could imagine a generalization of the Python ``Enum`` [12]_ to support
-variants of different shapes. Valueless variants could use `enum.auto` to keep
-themselves terse. This would be a substantial addition to the implementation and
-semantics of ``Enum``.
+variants of different shapes. Valueless variants could use ``enum.auto`` to
+keep themselves terse.
 
 .. code-block:: python
 
@@ -183,6 +182,13 @@ semantics of ``Enum``.
             r: int
             g: int
             b: int
+
+This solution allows attaching methods directly to the base ADT type,
+something a ``Union`` type lackes, but does not support the full
+power of inheritence that ``@sealed`` would provide.
+
+This would be a substantial addition to the implementation and
+semantics of ``Enum``.
 
 Explicitly list subclasses
 --------------------------
