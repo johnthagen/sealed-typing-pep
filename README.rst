@@ -157,19 +157,16 @@ generalized ``enum`` mechanism.
     }
 
 One could imagine a generalization of the Python ``Enum`` [12]_ to support
-variants of different shapes. But given that the Python ``Enum`` is more or
-less a normal class, with some magic internals, this would be a much more
-invasive change.
+variants of different shapes. Valueless variants could use ``enum.auto`` to
+keep themselves terse.
 
 .. code-block:: python
 
     from dataclasses import dataclass
-    from enum import Enum
+    from enum import auto, Enum
 
     class Message(Enum):
-        @dataclass
-        class Quit:
-            ...
+        Quit = auto()
 
         @dataclass
         class Move:
@@ -185,6 +182,13 @@ invasive change.
             r: int
             g: int
             b: int
+
+This solution allows attaching methods directly to the base ADT type,
+something a ``Union`` type lacks, but does not support the full
+power of inheritance that ``@sealed`` would provide.
+
+This would be a substantial addition to the implementation and
+semantics of ``Enum``.
 
 Explicitly list subclasses
 --------------------------
