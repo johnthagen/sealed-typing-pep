@@ -184,8 +184,8 @@ keep themselves terse.
             b: int
 
 This solution allows attaching methods directly to the base ADT type,
-something a ``Union`` type lackes, but does not support the full
-power of inheritence that ``@sealed`` would provide.
+something a ``Union`` type lacks, but does not support the full
+power of inheritance that ``@sealed`` would provide.
 
 This would be a substantial addition to the implementation and
 semantics of ``Enum``.
