@@ -141,6 +141,66 @@ Reference Implementation
 Rejected Ideas
 ==============
 
+``Union`` of independent variants
+---------------------------------
+
+Some of the behavior of ``sealed`` can be emulated with ``Union`` today.
+
+.. code-block:: python
+
+    class Leaf: ...
+    class Branch: ...
+
+    Node = Leaf | Branch
+
+The main problem with this is that the ADT loses all the features of
+inheritance, which is rather featureful in Python, to put it mildly. There can
+be no abstract methods, private methods to be reused by the subclasses, public
+methods to be exposed on all subclasses, ``__init_subclass__``, etc. Even if a
+specific method is implemented on each subclass, then rename,
+jump-to-definition, find-usage, and other IDE features are difficult to make
+work reliably.
+
+Adding a base class in addition to the union type alleviates some of these
+issues:
+
+.. code-block:: python
+
+    class BaseNode: ...
+
+    class Leaf(BaseNode): ...
+    class Branch(BaseNode): ...
+
+    Node = Leaf | Branch
+
+Despite being possible today, this is quite unergonomic. The base class and the
+union type are conceptually the same thing, but have to be defined as two
+separate objects. If this became standard, it seems Python would be first
+language to separate the definition of an ADT into two different objects.
+
+The base class is not merely passive, either. There are a number of operations
+that will only work when using the base class instead of the union type. For
+example, matching only works on the base class, not the union type:
+
+.. code-block:: python
+
+    maybe_node: Node | None = ...  # must be Node to enforce exhaustiveness
+
+    match maybe_node:
+        case Node():  # TypeError: called match pattern must be a type
+            ...
+        case None:
+            ...
+
+    match maybe_node:
+        case BaseNode():  # no error
+            ...
+        case None:
+            ...
+
+Having to remember whether to use the base class or the union type in each
+situation is particularly unfriendly to the user of a sealed class.
+
 Generalize ``Enum``
 -------------------
 
@@ -241,67 +301,6 @@ is no natural place for the annotation to live. Here is one possibility:
 
     class Leaf(Node): ...
     class Branch(Node): ...
-
-``Union`` of independent variants
----------------------------------
-
-Some of the behavior of ``sealed`` can be emulated with ``Union`` today.
-
-.. code-block:: python
-
-    class Leaf: ...
-    class Branch: ...
-
-    Node = Leaf | Branch
-
-The main problem with this is that the ADT loses all the features of
-inheritance, which is rather featureful in Python, to put it mildly. There can
-be no abstract methods, private methods to be reused by the subclasses, public
-methods to be exposed on all subclasses, ``__init_subclass__``, etc. Even if a
-specific method is implemented on each subclass, then rename,
-jump-to-definition, find-usage, and other IDE features are difficult to make
-work reliably.
-
-Adding a base class in addition to the union type alleviates some of these
-issues:
-
-.. code-block:: python
-
-    class BaseNode: ...
-
-    class Leaf(BaseNode): ...
-    class Branch(BaseNode): ...
-
-    Node = Leaf | Branch
-
-Despite being possible today, this is quite unergonomic. The base class and the
-union type are conceptually the same thing, but have to be defined as two
-separate objects. If this became standard, it seems Python would be first
-language to separate the definition of an ADT into two different objects.
-
-The base class is not merely passive, either. There are a number of operations
-that will only work when using the base class instead of the union type. For
-example, matching only works on the base class, not the union type:
-
-.. code-block:: python
-
-    maybe_node: Node | None = ...  # must be Node to enforce exhaustiveness
-
-    match maybe_node:
-        case Node():  # TypeError: called match pattern must be a type
-            ...
-        case None:
-            ...
-
-    match maybe_node:
-        case BaseNode():  # no error
-            ...
-        case None:
-            ...
-
-Having to remember whether to use the base class or the union type in each
-situation is particularly unfriendly to the user of a sealed class.
-
 
 Footnotes
 =========
