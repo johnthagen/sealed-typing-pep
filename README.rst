@@ -178,9 +178,15 @@ union type are conceptually the same thing, but have to be defined as two
 separate objects. If this became standard, it seems Python would be first
 language to separate the definition of an ADT into two different objects.
 
+This duplication causes a serious don't-repeat-yourself problem. A new subclass
+must be added to both the base class and the union type. Failure to do so will
+not result in an immediate error but in inconsistent behavior between the two
+representations.
+
 The base class is not merely passive, either. There are a number of operations
-that will only work when using the base class instead of the union type. For
-example, matching only works on the base class, not the union type:
+that will only work when using the base class instead of the union type and
+vice verse. For example, matching only works on the base class, not the union
+type:
 
 .. code-block:: python
 
@@ -259,13 +265,13 @@ Java requires that subclasses be explicitly listed with the base class.
 
     public sealed interface Node
         permits Leaf, Branch {}
-    
+
     public final class Leaf {}
     public final class Branch {}
 
 The advantage of this requirement is that subclasses can be defined anywhere,
 not just in the same file, eliminating the somewhat weird file dependence of
-this feature. Once disadvantage is that requires that all subclasses to be
+this feature. Once disadvantage is that it requires that all subclasses to be
 written twice: once when defined and once in the enumerated list on the base
 class.
 
