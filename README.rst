@@ -7,7 +7,7 @@ Discussions-To: typing-sig@python.org
 Status: Draft
 Type: Standards Track
 Content-Type: text/x-rst
-Created: 17-Apr-2022
+Created: 22-Mar-2024
 Python-Version: 3.13
 Post-History:
 Resolution: <url>
