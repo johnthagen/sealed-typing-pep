@@ -157,10 +157,10 @@ Some of the behavior of ``sealed`` can be emulated with ``Union`` today.
 The main problem with this is that the ADT loses all the features of
 inheritance, which is rather featureful in Python, to put it mildly. There can
 be no abstract methods, private methods to be reused by the subclasses, public
-methods to be exposed on all subclasses, ``__init_subclass__``, etc. Even if a
-specific method is implemented on each subclass, then rename,
-jump-to-definition, find-usage, and other IDE features are difficult to make
-work reliably.
+methods to be exposed on all subclasses, class methods of any kind,
+``__init_subclass__``, etc. Even if a specific method is implemented on each
+subclass, then rename, jump-to-definition, find-usage, and other IDE features
+are difficult to make work reliably.
 
 Adding a base class in addition to the union type alleviates some of these
 issues:
@@ -179,9 +179,15 @@ union type are conceptually the same thing, but have to be defined as two
 separate objects. If this became standard, it seems Python would be first
 language to separate the definition of an ADT into two different objects.
 
+This duplication causes a serious don't-repeat-yourself problem. A new subclass
+must be added to both the base class and the union type. Failure to do so will
+not result in an immediate error but in inconsistent behavior between the two
+representations.
+
 The base class is not merely passive, either. There are a number of operations
-that will only work when using the base class instead of the union type. For
-example, matching only works on the base class, not the union type:
+that will only work when using the base class instead of the union type and
+vice verse. For example, matching only works on the base class, not the union
+type:
 
 .. code-block:: python
 
@@ -260,7 +266,7 @@ Java requires that subclasses be explicitly listed with the base class.
 
     public sealed interface Node
         permits Leaf, Branch {}
-    
+
     public final class Leaf {}
     public final class Branch {}
 
