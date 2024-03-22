@@ -28,7 +28,7 @@ Quite often it is desirable to apply exhaustiveness to a set of classes without
 defining ad-hoc union types, which is itself fragile if a class is missing in
 the union definition. A design pattern where a group of record-like classes is
 combined into a union is popular in other languages that support pattern
-matching [1]_ and is known as a nominal sum type, a key instatiation of
+matching [1]_ and is known as a nominal sum type, a key instantiation of
 algebraic data types [2]_.
 
 We propose adding a special decorator class ``@sealed`` to the ``typing``
@@ -135,7 +135,8 @@ enforcement of sealed class inheritance.
 Reference Implementation
 ========================
 
-[Link to any existing implementation and details about its state, e.g. proof-of-concept.]
+[Link to any existing implementation and details about its state, e.g.
+proof-of-concept.]
 
 
 Rejected Ideas
@@ -265,7 +266,7 @@ Java requires that subclasses be explicitly listed with the base class.
 
 The advantage of this requirement is that subclasses can be defined anywhere,
 not just in the same file, eliminating the somewhat weird file dependence of
-this feature. Once disadvantage is that requires that all subclasses to be
+this feature. The disadvantage is that it requires all subclasses to be
 written twice: once when defined and once in the enumerated list on the base
 class.
 
