@@ -156,10 +156,10 @@ Some of the behavior of ``sealed`` can be emulated with ``Union`` today.
 The main problem with this is that the ADT loses all the features of
 inheritance, which is rather featureful in Python, to put it mildly. There can
 be no abstract methods, private methods to be reused by the subclasses, public
-methods to be exposed on all subclasses, ``__init_subclass__``, etc. Even if a
-specific method is implemented on each subclass, then rename,
-jump-to-definition, find-usage, and other IDE features are difficult to make
-work reliably.
+methods to be exposed on all subclasses, class methods of any kind,
+``__init_subclass__``, etc. Even if a specific method is implemented on each
+subclass, then rename, jump-to-definition, find-usage, and other IDE features
+are difficult to make work reliably.
 
 Adding a base class in addition to the union type alleviates some of these
 issues:
