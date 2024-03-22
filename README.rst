@@ -1,5 +1,5 @@
 PEP: <REQUIRED: pep number>
-Title: Adding a sealed qualifier to typing
+Title: Sealed Decorator for Static Typing
 Author: John Hagen <johnthagen@gmail.com>, David Hagen <david@drhagen.com>
 Sponsor: Jelle Zijlstra
 PEP-Delegate: <PEP delegate's real name>
