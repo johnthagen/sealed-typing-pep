@@ -1,7 +1,7 @@
 PEP: <REQUIRED: pep number>
 Title: Sealed Decorator for Static Typing
 Author: John Hagen <johnthagen@gmail.com>, David Hagen <david@drhagen.com>
-Sponsor: Jelle Zijlstra
+Sponsor:
 PEP-Delegate: <PEP delegate's real name>
 Discussions-To: https://discuss.python.org/t/draft-pep-sealed-decorator-for-static-typing/49206
 Status: Draft
