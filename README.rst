@@ -309,6 +309,17 @@ is no natural place for the annotation to live. Here is one possibility:
     class Leaf(Node): ...
     class Branch(Node): ...
 
+Adding syntax could overcome this limitation, but that is too big of a change to
+the language to support just this feature:
+
+.. code-block:: python
+
+    class Node of Leaf | Branch:
+        ...
+
+    class Leaf(Node): ...
+    class Branch(Node): ...
+
 Footnotes
 =========
 
